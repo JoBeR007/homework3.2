@@ -1,10 +1,11 @@
 package ru.urfu;
 
 import java.io.FileNotFoundException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 import java.util.stream.Collectors;
-
-import static java.util.Map.Entry.*;
 
 /*
     Для сопоставления слов и их частот был выбран LinkedHashMap, так как он позволяет
@@ -32,7 +33,9 @@ public class Main {
     private static String getFileName(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("insert filename: ");
-        return scanner.nextLine();
+        String fileName = scanner.nextLine();
+        scanner.close();
+        return fileName;
     }
 
     private static List<Map.Entry<String, Long>> getTop10(Map<String, Long> sortedMap){
@@ -43,8 +46,7 @@ public class Main {
 
     private static List<Map.Entry<String, Long>> getBottom10(Map<String, Long> sortedMap){
         return sortedMap.entrySet().stream()
-                .sorted(comparingByValue(Comparator.naturalOrder()))
-                .limit(10)
+                .skip(sortedMap.size() - 10)
                 .collect(Collectors.toList());
     }
 }
