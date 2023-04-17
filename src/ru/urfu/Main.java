@@ -1,10 +1,7 @@
 package ru.urfu;
 
 import java.io.FileNotFoundException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /*
@@ -18,11 +15,10 @@ import java.util.stream.Collectors;
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
         String fileName = getFileName();
-        String text = FileReader.readFile(fileName);
-
-        String[] wordsArray = text.split("[\\p{Punct}\\s-\\w\\p{Pd}\\u00A0]+");
-
-        Map<String, Long> result = Counter.countWords(Arrays.stream(wordsArray).toList());
+        Map<String, Long> result = Counter.countWords
+                (Arrays.stream(FileReader.readFile(fileName)
+                        .split("[\\p{Punct}\\s-\\w\\p{Pd}\\u00A0]+"))
+                        .toList());
 
         System.out.println("top 10 most used:");
         System.out.println(getTop10(result));
